@@ -28,11 +28,11 @@ func errCheck(err error) {
 }
 
 // Parse reads a htmldoc and recursively goes through each node looking for a tags
-func Parse(r io.Reader) ([]link, error) {
+func Parse(r io.Reader) ([]Link, error) {
 	doc, err := html.Parse(r)
 	errCheck(err)
 
-	links := make([]link, 0)
+	links := make([]Link, 0)
 
 	var parseTree func(*html.Node)
 
@@ -53,14 +53,14 @@ func Parse(r io.Reader) ([]link, error) {
 }
 
 // createLink returns a parsed node in a link structure
-func createLink(nodes *html.Node) link {
+func createLink(nodes *html.Node) Link {
 	for _, attribute := range nodes.Attr {
-		return link{
+		return Link{
 			Href: attribute.Val,
 			Text: strings.TrimSpace(parseText(nodes)),
 		}
 	}
-	return link{}
+	return Link{}
 }
 
 // grabText traverses horizontally until next sibling is nil and down the tree when we hit a branch
