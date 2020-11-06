@@ -10,10 +10,11 @@ import (
 )
 
 // link represents the structure of the data returned
-type link struct {
+type Link struct {
 	Href string
 	Text string
 }
+
 const (
 	anchorTag = "a"
 	strongTag = "strong"
@@ -27,7 +28,7 @@ func errCheck(err error) {
 }
 
 // Parse reads a htmldoc and recursively goes through each node looking for a tags
-func Parse(r io.Reader) ([]link, error){
+func Parse(r io.Reader) ([]link, error) {
 	doc, err := html.Parse(r)
 	errCheck(err)
 
@@ -63,14 +64,13 @@ func createLink(nodes *html.Node) link {
 }
 
 // grabText traverses horizontally until next sibling is nil and down the tree when we hit a branch
-func parseText(node *html.Node) string{
+func parseText(node *html.Node) string {
 	if node.Type == html.TextNode {
 		return node.Data
 	}
 	if node.Type != html.ElementNode {
 		return ""
 	}
-
 
 	var parsedText string
 
@@ -80,4 +80,3 @@ func parseText(node *html.Node) string{
 
 	return parsedText
 }
-

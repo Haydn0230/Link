@@ -10,66 +10,66 @@ import (
 )
 
 func TestHTMLParser(t *testing.T) {
-	tt := []struct{
-		name string
-		file string
+	tt := []struct {
+		name     string
+		file     string
 		expected []link
 	}{
 		{
 			name: "checks a link struct is returned,",
 			file: "../test-files/ex1.html",
-			expected:[]link{
+			expected: []link{
 				{
-					Href:"/other-page",
-					Text:"A link to another page",
+					Href: "/other-page",
+					Text: "A link to another page",
 				},
 			},
 		},
 		{
 			name: "checks a link struct is returned,",
 			file: "../test-files/ex2.html",
-			expected:[]link{
+			expected: []link{
 				{
-					Href:"https://www.twitter.com/joncalhoun",
-					Text:"Check me out on twitter",
+					Href: "https://www.twitter.com/joncalhoun",
+					Text: "Check me out on twitter",
 				},
 				{
-					Href:"https://github.com/gophercises",
-					Text:"Gophercises is on Github!",
+					Href: "https://github.com/gophercises",
+					Text: "Gophercises is on Github!",
 				},
 			},
 		},
 		{
 			name: "checks a link struct is returned for test case 3 ",
 			file: "../test-files/ex3.html",
-			expected:[]link{
+			expected: []link{
 				{
-					Href:"#",
-					Text:"Login",
+					Href: "#",
+					Text: "Login",
 				},
 				{
-					Href:"/lost",
-					Text:"Lost? Need help?",
+					Href: "/lost",
+					Text: "Lost? Need help?",
 				},
 				{
-					Href:"https://twitter.com/marcusolsson",
-					Text:"@marcusolsson",
+					Href: "https://twitter.com/marcusolsson",
+					Text: "@marcusolsson",
 				},
 			},
 		},
 		{
 			name: "checks a link struct is returned,",
 			file: "../test-files/ex4.html",
-			expected:[]link{
+			expected: []link{
 				{
-					Href:"/dog-cat",
-					Text:"dog cat",
+					Href: "/dog-cat",
+					Text: "dog cat",
 				},
 			},
 		},
 	}
 	for _, tc := range tt {
-		t.Run(tc.name, func(t *testing.T){
+		t.Run(tc.name, func(t *testing.T) {
 			xb, err := ioutil.ReadFile(tc.file)
 			errCheck(err)
 
@@ -83,10 +83,9 @@ func TestHTMLParser(t *testing.T) {
 		})
 	}
 
-
 }
 
-func TestGrabText( t *testing.T) {
+func TestGrabText(t *testing.T) {
 	testData := &html.Node{
 		FirstChild: &html.Node{
 			NextSibling: &html.Node{
@@ -103,15 +102,13 @@ func TestGrabText( t *testing.T) {
 				Type: html.ElementNode,
 				Data: "strong",
 			},
-		Type: html.TextNode,
-		Data: "Gophercise is on ",
-	},
-	Type:html.ElementNode,
+			Type: html.TextNode,
+			Data: "Gophercise is on ",
+		},
+		Type: html.ElementNode,
 	}
-
 
 	result := parseText(testData)
 
-	assert.Equal(t,  "Gophercise is on Github!",result)
+	assert.Equal(t, "Gophercise is on Github!", result)
 }
-
